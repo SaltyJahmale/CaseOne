@@ -42,9 +42,6 @@ public class FileInputTest {
     @Test
     public void test() throws IOException {
 
-        UploadFile uploadFile = new UploadFile();
-        uploadFile.getCourseBlocks(file);
-
 
     }
 

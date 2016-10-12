@@ -59,11 +59,6 @@ public class UploadFile {
 
         return map;
     }
-
-    public ArrayList<String> getCourseBlocks(String wholeDocument) {
-        String[] courseBlocks = wholeDocument.split("\\r\\n\\r\\n");
-        return new ArrayList<>(Arrays.asList(courseBlocks));
-    }
-
+    
 
 }
