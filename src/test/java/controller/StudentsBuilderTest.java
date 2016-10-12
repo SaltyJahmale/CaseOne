@@ -1,4 +1,7 @@
-package model;
+package controller;
+
+import model.Students;
+import model.StudentsType;
 
 import java.util.HashSet;
 
@@ -8,9 +11,9 @@ import java.util.HashSet;
 public class StudentsBuilderTest {
     public static Students.StudentsBuilder studentsBuilder() {
         return Students.builder()
-                .firstName("Martin")
+                .firstName("Yusuf")
                 .lastName("Yusuf")
                 .accountNumber("0123456789")
-                .studentsTypes(new HashSet<StudentsType>());
+                .studentsTypes(StudentsType.INDIVIDUAL);
     }
 }

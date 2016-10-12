@@ -13,10 +13,11 @@ import java.util.Set;
 @Builder
 public class Students {
 
+    private int studentId;
     private String firstName;
     private String lastName;
     private String accountNumber;
     List<Courses> coursesList;
-    private Set<StudentsType> studentsTypes;
+    private Enum<StudentsType> studentsTypes;
 
 }

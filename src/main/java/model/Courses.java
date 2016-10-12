@@ -12,9 +12,10 @@ import java.util.List;
 @Data
 @Builder
 public class Courses {
+
+    private int courseId;
     private String courseTitle;
     private String courseCode;
-    private LocalDate startDate;
     private long duration;
     List<Students> studentsList;
 

@@ -1,10 +1,7 @@
 package database;
 
-import jdk.nashorn.internal.ir.Statement;
-
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
@@ -17,15 +14,20 @@ public class JDBC {
     private String password = "0000";
     Connection connection;
 
-    Statement stmt;
-    ResultSet rset;
-    String query;
-    String sqlString;
+    public Connection getDBConnection() {
 
+        try {
 
-    public void getDBConnection() throws SQLException {
+            Class.forName("oracle.jdbc.OracleDriver");
+            connection = DriverManager.getConnection(jdbcUrl, userid, password);
 
-        connection = DriverManager.getConnection(jdbcUrl, userid, password);
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+
+        }
+
+        return connection;
+
     }
 
 }
