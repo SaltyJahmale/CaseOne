@@ -2,9 +2,12 @@ package controller;
 
 import database.JDBC;
 import model.Courses;
+
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -14,18 +17,17 @@ public class CoursesDataHandler {
 
     private JDBC jdbc = new JDBC();
 
-
-    public int insertCours(Courses cours) throws SQLException {
+    public int insertCourse(Courses course) throws SQLException {
 
         try {
             jdbc.getDBConnection();
 
-            String query = "INSERT INTO STEVE.COURSES(COURSETITLE, COURSECODE, DURATION) VALUES(?, ?, ?)";
+            String query = "INSERT INTO Courses(COURSETITLE, COURSECODE, DURATION) VALUES(?, ?, ?)";
             PreparedStatement ps = jdbc.getDBConnection().prepareStatement(query);
 
-            ps.setString(1, cours.getCourseTitle());
-            ps.setString(2, cours.getCourseCode());
-            ps.setLong(3, cours.getDuration());
+            ps.setString(1, course.getCourseTitle());
+            ps.setString(2, course.getCourseCode());
+            ps.setLong(3, course.getDuration());
 
             return ps.executeUpdate();
 
@@ -34,7 +36,7 @@ public class CoursesDataHandler {
 
         } finally {
 
-            if(jdbc.getDBConnection() != null) {
+            if (jdbc.getDBConnection() != null) {
                 jdbc.getDBConnection().close();
             }
         }
@@ -43,15 +45,15 @@ public class CoursesDataHandler {
     }
 
 
-    public int updateCours(Courses cours, int id) throws SQLException{
+    public int updateCourse(Courses course, int id) throws SQLException {
 
         try {
             jdbc.getDBConnection();
-            String query = "UPDATE STEVE.COURSES SET COURSETITLE = ?, COURSECODE = ?, DURATION = ? WHERE COURSEID = ?";
+            String query = "UPDATE Courses SET COURSETITLE = ?, COURSECODE = ?, DURATION = ? WHERE COURSEID = ?";
             PreparedStatement ps = jdbc.getDBConnection().prepareStatement(query);
-            ps.setString(1, cours.getCourseTitle());
-            ps.setString(2, cours.getCourseCode());
-            ps.setLong(3, cours.getDuration());
+            ps.setString(1, course.getCourseTitle());
+            ps.setString(2, course.getCourseCode());
+            ps.setLong(3, course.getDuration());
             ps.setInt(4, id);
             return ps.executeUpdate();
 
@@ -60,7 +62,7 @@ public class CoursesDataHandler {
 
         } finally {
 
-            if(jdbc.getDBConnection() != null) {
+            if (jdbc.getDBConnection() != null) {
                 jdbc.getDBConnection().close();
             }
 
@@ -68,8 +70,8 @@ public class CoursesDataHandler {
         return 0;
     }
 
-    public Courses getCours(int id) throws SQLException {
-        String query = "SELECT * FROM STEVE.COURSES WHERE COURSEID = ?";
+    public Courses getCourse(int id) throws SQLException {
+        String query = "SELECT * FROM Courses WHERE COURSEID = ?";
         PreparedStatement ps = jdbc.getDBConnection().prepareStatement(query);
         ResultSet resultSet;
         Courses course = null;
@@ -78,12 +80,13 @@ public class CoursesDataHandler {
             ps.setInt(1, id);
             resultSet = ps.executeQuery();
             while (resultSet.next()) {
-
+                int courseId = resultSet.getInt("COURSEID");
                 String courseTitle = resultSet.getString("COURSETITLE");
                 String courseCode = resultSet.getString("COURSECODE");
                 long duration = resultSet.getLong("DURATION");
 
                 course = Courses.builder()
+                        .courseId(courseId)
                         .courseTitle(courseTitle)
                         .courseCode(courseCode)
                         .duration(duration)
@@ -96,7 +99,7 @@ public class CoursesDataHandler {
             e.printStackTrace();
         } finally {
 
-            if(jdbc.getDBConnection() != null) {
+            if (jdbc.getDBConnection() != null) {
                 jdbc.getDBConnection().close();
             }
         }
@@ -104,10 +107,48 @@ public class CoursesDataHandler {
         return course;
     }
 
-    public int deleteCours(int id) throws SQLException {
+    public List<Courses> getAllCourses() throws SQLException {
+        List<Courses> coursesList = new ArrayList();
+        String query = "SELECT * FROM Courses";
+        PreparedStatement ps = jdbc.getDBConnection().prepareStatement(query);
+        ResultSet resultSet;
+
+        try {
+            resultSet = ps.executeQuery();
+
+            while (resultSet.next()) {
+                int courseId = resultSet.getInt("COURSEID");
+                String courseTitle = resultSet.getString("COURSETITLE");
+                String courseCode = resultSet.getString("COURSECODE");
+                long duration = resultSet.getLong("DURATION");
+
+                Courses course = Courses.builder()
+                        .courseId(courseId)
+                        .courseTitle(courseTitle)
+                        .courseCode(courseCode)
+                        .duration(duration)
+                        .build();
+
+                coursesList.add(course);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+
+        } finally {
+
+            if (jdbc.getDBConnection() != null) {
+                jdbc.getDBConnection().close();
+            }
+        }
+
+        return coursesList;
+    }
+
+    public int deleteCourse(int id) throws SQLException {
         try {
             jdbc.getDBConnection();
-            String query = "DELETE FROM STEVE.COURSES WHERE COURSEID = ?";
+            String query = "DELETE FROM Courses WHERE COURSEID = ?";
             PreparedStatement ps = jdbc.getDBConnection().prepareStatement(query);
             ps.setInt(1, id);
             return ps.executeUpdate();
@@ -117,7 +158,7 @@ public class CoursesDataHandler {
             e.printStackTrace();
         } finally {
 
-            if(jdbc.getDBConnection() != null) {
+            if (jdbc.getDBConnection() != null) {
                 jdbc.getDBConnection().close();
             }
         }

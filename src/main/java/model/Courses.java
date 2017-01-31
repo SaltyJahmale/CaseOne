@@ -1,7 +1,7 @@
 package model;
 
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
+
 import java.time.LocalDate;
 import java.util.List;
 
@@ -9,8 +9,11 @@ import java.util.List;
 /**
  * Created by dewi on 10.10.16.
  */
-@Data
 @Builder
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 public class Courses {
 
     private int courseId;

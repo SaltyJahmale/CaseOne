@@ -2,7 +2,9 @@ package controller;
 
 import model.Students;
 import org.junit.Test;
+
 import java.sql.SQLException;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 import static org.hamcrest.Matchers.greaterThan;
@@ -25,7 +27,7 @@ public class StudentsTest {
     public void compareTheEnumTypeIndividual() {
         Students students = StudentsBuilderTest.studentsBuilder().build();
 
-        assertThat( students.getStudentsTypes(), is(students.getStudentsTypes()));
+        assertThat(students.getStudentsTypes(), is(students.getStudentsTypes()));
     }
 
     @Test
@@ -43,7 +45,7 @@ public class StudentsTest {
         Students students = StudentsBuilderTest.studentsBuilder().firstName("Yusuf").lastName("Yusuf").build();
         int result = studentsDataHandler.updateStudent(students, 21);
 
-        assertThat(result,  greaterThan(0));
+        assertThat(result, greaterThan(0));
 
     }
 
@@ -58,7 +60,7 @@ public class StudentsTest {
     @Test
     public void deleteStudentQuery() throws SQLException {
         StudentsDataHandler studentsDataHandler = new StudentsDataHandler();
-        int result = studentsDataHandler.deleteStudent(21);
+        int result = studentsDataHandler.deleteStudent(3);
 
         assertThat(result, is(1));
     }

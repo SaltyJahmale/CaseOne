@@ -9,8 +9,8 @@ import java.sql.SQLException;
  */
 public class JDBC {
 
-    private String jdbcUrl = "jdbc:oracle:thin:@//localhost:1521/XE";
-    private String userid = "steve";
+    private String jdbcUrl = "jdbc:mariadb://localhost:3306/caseone";
+    private String userid = "root";
     private String password = "0000";
     Connection connection;
 
@@ -18,7 +18,7 @@ public class JDBC {
 
         try {
 
-            Class.forName("oracle.jdbc.OracleDriver");
+            Class.forName("org.mariadb.jdbc.Driver");
             connection = DriverManager.getConnection(jdbcUrl, userid, password);
 
         } catch (SQLException | ClassNotFoundException e) {

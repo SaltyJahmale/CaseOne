@@ -32,7 +32,7 @@ public class CoursesTest {
     @Test
     public void noEmptyList() {
         Students students = StudentsBuilderTest.studentsBuilder().build();
-        List<Students>  studentsList = new ArrayList<Students>();
+        List<Students> studentsList = new ArrayList<Students>();
         studentsList.add(students);
 
         Courses courses = CoursesBuilderTest.coursesBuilder().build();
@@ -45,7 +45,7 @@ public class CoursesTest {
     public void insertCourseQuery() throws SQLException {
         CoursesDataHandler coursesDataHandler = new CoursesDataHandler();
         Courses courses = CoursesBuilderTest.coursesBuilder().build();
-        int result = coursesDataHandler.insertCours(courses);
+        int result = coursesDataHandler.insertCourse(courses);
 
         assertThat(result, is(1));
 
@@ -55,7 +55,7 @@ public class CoursesTest {
     public void updateCourseQuery() throws SQLException {
         CoursesDataHandler coursesDataHandler = new CoursesDataHandler();
         Courses courses = CoursesBuilderTest.coursesBuilder().courseTitle("Python").courseCode("ABCD").build();
-        int result = coursesDataHandler.updateCours(courses, 1);
+        int result = coursesDataHandler.updateCourse(courses, 1);
 
         assertThat(result, is(1));
 
@@ -64,7 +64,7 @@ public class CoursesTest {
     @Test
     public void getCourseQuery() throws SQLException {
         CoursesDataHandler coursesDataHandler = new CoursesDataHandler();
-        Courses result = coursesDataHandler.getCours(1);
+        Courses result = coursesDataHandler.getCourse(1);
 
         assertThat(result.getCourseTitle(), is("Python"));
 
@@ -73,12 +73,11 @@ public class CoursesTest {
     @Test
     public void deleteCourseQuery() throws SQLException {
         CoursesDataHandler coursesDataHandler = new CoursesDataHandler();
-        int result = coursesDataHandler.deleteCours(1);
+        int result = coursesDataHandler.deleteCourse(1);
 
         assertThat(result, is(1));
 
     }
-
 
 
 }

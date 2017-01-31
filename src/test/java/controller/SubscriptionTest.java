@@ -1,5 +1,6 @@
 package controller;
 
+import model.Subscription;
 import org.junit.Test;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -21,7 +22,13 @@ public class SubscriptionTest {
         try {
 
             SubscriptionDataHandler subscriptionDataHandler = new SubscriptionDataHandler();
-            subscriptionDataHandler.insertSubscription(LocalDate.of(2016, Month.OCTOBER, 25), 22, 23);
+
+            Subscription subscription = new Subscription();
+            subscription.setStartDate(LocalDate.of(2016, Month.OCTOBER, 25));
+            subscription.setCourseId(1);
+            subscription.setStudentId(1);
+
+            subscriptionDataHandler.insertSubscription(subscription);
 
         } catch (SQLException e) {
 
